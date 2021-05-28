@@ -66,6 +66,5 @@
     <Build Include="Tables\GenericStringsComputations.sql" />
     <Build Include="Security\LAPTOP-1E03MQ6J_kumar.sql" />
     <Build Include="Security\LD.sql" />
-    <Build Include="DatbaseScript.sql" />
   </ItemGroup>
 </Project>

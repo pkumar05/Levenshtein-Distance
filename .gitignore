@@ -3,3 +3,21 @@
 ################################################################################
 
 /API/LevenshteinDistance/.vs/LevenshteinDistance
+/API/LevenshteinDistance/bin/Debug/netcoreapp2.1
+/API/LevenshteinDistance/obj
+/ApplicationServices/LD.ApplicationServices/bin/Debug/netcoreapp2.1
+/ApplicationServices/LD.ApplicationServices/obj
+/Database/LD.DB/bin/Debug
+/Database/LD.DB/Import Schema Logs
+/Database/LD.DB/obj/Debug
+/Database/LD.DB/LD.DB.sqlproj.user
+/Database/LD.DB/Security/LAPTOP-1E03MQ6J_kumar.sql
+/Domain/LD.Domain/bin/Debug/netcoreapp2.1
+/Domain/LD.Domain/obj
+/Gateway/LD.Proxy/bin/Debug/netcoreapp2.1
+/Gateway/LD.Proxy/obj
+/Infrastructure/LD.SQL.Infrastructure/bin/Debug/netcoreapp2.1
+/Infrastructure/LD.SQL.Infrastructure/obj
+/Infrastructure/LD.SQL.Infrastructure/LD.SQL.Infrastructure.csproj.user
+/ServiceInterfaces/LD.AS.Interfaces/bin/Debug/netcoreapp2.1
+/ServiceInterfaces/LD.AS.Interfaces/obj

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SD.BuildingBlocks.Infrastructure" Version="1.0.0" />
+    <PackageReference Include="SD.BuldingBlocks.Repository.Core.2.1" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\LD.Domain\LD.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

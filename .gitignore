@@ -21,3 +21,4 @@
 /Infrastructure/LD.SQL.Infrastructure/LD.SQL.Infrastructure.csproj.user
 /ServiceInterfaces/LD.AS.Interfaces/bin/Debug/netcoreapp2.1
 /ServiceInterfaces/LD.AS.Interfaces/obj
+/Database/LD.DB/DatbaseScript.sql

@@ -12,6 +12,7 @@ namespace LD.Domain.DTO
         public const string NoDataAvailable = "Data not available.";
         public const string SuccessfullyAdded = "Successfully added.";
         public const string Successfull = "Successfull.";
+        public const string RecordsRetrievedSuccessfully = "Records Retrieved Successfully.";
 
     }
 }

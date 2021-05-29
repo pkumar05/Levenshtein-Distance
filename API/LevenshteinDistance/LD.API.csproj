@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Helper\ModelBinders.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helper\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

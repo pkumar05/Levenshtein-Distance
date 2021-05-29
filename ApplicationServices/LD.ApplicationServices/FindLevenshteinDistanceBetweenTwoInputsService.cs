@@ -3,6 +3,7 @@ using LD.AS.Interfaces;
 using LD.Domain.DTO;
 using LD.Domain.Entities;
 using LD.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore.Internal;
 using SD.BuildingBlocks.Infrastructure;
 using System;
 using System.Threading.Tasks;
@@ -39,22 +40,21 @@ namespace LD.ApplicationServices
         /// <param name="inputOne"></param>
         /// <param name="inputTwo"></param>
         /// <returns></returns>
-        public async Task<ServiceResponse> AddCalculatedLevenshteinDistance(string inputOne, string inputTwo, int levenshteinDistanceVal, string createdBy)
+        public async Task<ServiceResponse> AddCalculatedLevenshteinDistance(AddLevenshteinDistanceBetweenTwoStrings request, string createdBy)
         {
 
             try
             {
 
-                var levenshteinDistance = _genericStringsComputationsRequestRepos.Get(x => x.Active && x.Source == inputOne && x.Target == inputTwo);
+                var levenshteinDistance = _genericStringsComputationsRequestRepos.Get(x => x.Active && x.Source == request.Source && x.Target == request.Target);
                 if (levenshteinDistance == null)
                 {
                     GenericStringsComputations gsc = new GenericStringsComputations
                     {
                         ID = Guid.NewGuid().ToString(),
-                        Source = inputOne,
-                        Target = inputTwo,
-                        LevenshteinDistance = levenshteinDistanceVal,
-
+                        Source = request.Source,
+                        Target = request.Target,
+                        LevenshteinDistance = request.LevenshteinDistanceVal,
                         Active = true,
                         CreatedBy = createdBy,
                         CreatedDate = DateTime.Now
@@ -77,21 +77,21 @@ namespace LD.ApplicationServices
         /// <param name="source"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public async Task<ServiceResponse> FindLevenshteinDistanceBetweenTwoInputs(string source, string target, string requestedUser)
+        public async Task<ServiceResponse> FindLevenshteinDistanceBetweenTwoInputs(FindLevenshteinDistanceRequest request, string requestedUser)
         {
             ServiceResponse response = new ServiceResponse();
             try
             {
 
-                int n = source.Length;
-                int m = target.Length;
+                int n = request.Source.Length;
+                int m = request.Target.Length;
                 int[,] d = new int[n + 1, m + 1];
 
-                if (!string.IsNullOrEmpty(source))
-                    source = source.ToUpper();
+                if (!string.IsNullOrEmpty(request.Source))
+                    request.Source = request.Source.ToUpper();
 
-                if (!string.IsNullOrEmpty(target))
-                    target = target.ToUpper();
+                if (!string.IsNullOrEmpty(request.Target))
+                    request.Target = request.Target.ToUpper();
 
                 if (!string.IsNullOrEmpty(requestedUser))
                     requestedUser = requestedUser.ToUpper();
@@ -116,7 +116,7 @@ namespace LD.ApplicationServices
 
                 for (int j = 1; j <= m; j++)
                     for (int i = 1; i <= n; i++)
-                        if (source[i - 1] == target[j - 1])
+                        if (request.Source[i - 1] == request.Target[j - 1])
                             d[i, j] = d[i - 1, j - 1];  //no operation
                         else
                             d[i, j] = Math.Min(Math.Min(
@@ -125,11 +125,16 @@ namespace LD.ApplicationServices
                                 d[i - 1, j - 1] + 1 //a substitution
                                 );
                 response.data = d[n, m];
-                
+
 
                 int levenshteinDistanceVal = Convert.ToInt32(response.data);
 
-                var addLevenshteinDistanceVal = AddCalculatedLevenshteinDistance(source,target,levenshteinDistanceVal,requestedUser);
+                var addLevenshteinDistanceBetweenTwoStrings = new AddLevenshteinDistanceBetweenTwoStrings();
+                addLevenshteinDistanceBetweenTwoStrings.Source = request.Source;
+                addLevenshteinDistanceBetweenTwoStrings.Target = request.Target;
+                addLevenshteinDistanceBetweenTwoStrings.LevenshteinDistanceVal = levenshteinDistanceVal;
+
+                var addLevenshteinDistanceVal = AddCalculatedLevenshteinDistance(addLevenshteinDistanceBetweenTwoStrings, requestedUser);
 
                 response.msg = CommonConstants.Successfull;
                 response.success = true;
@@ -141,5 +146,29 @@ namespace LD.ApplicationServices
             catch (Exception ex) { throw; }
         }
 
+        /// <summary>
+        /// Method added to retrieve all Levenshtein distance for all the strings
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ServiceResponse> GetAllStringsLevenshteinDistance()
+        {
+            try
+            {
+                var data = _genericStringsComputationsRequestRepos.GetAll(x => x.Active);
+                if (data.Any())
+                {
+                    response.data = data;
+                    response.msg = CommonConstants.RecordsRetrievedSuccessfully;
+
+                }
+                else
+                    response.msg = CommonConstants.NoDataAvailable;
+
+                response.success = true;
+                return await Task.Run(() => response);
+            }
+            catch (Exception ex)
+            { throw; }
+        }
     }
 }

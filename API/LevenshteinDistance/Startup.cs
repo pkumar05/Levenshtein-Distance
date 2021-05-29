@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation.AspNetCore;
 using LD.API.DependencyConfig;
+using LD.API.Helper;
 //using LD.API.Helper;
 using LD.Domain.AutoMapper;
 using LD.Domain.DTO;
@@ -93,13 +95,13 @@ namespace LevenshteinDistance
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //Below lines can be commented
-            //services.AddMvc(options =>
-            //{
-            //    options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
-            //}).SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddFluentValidation();
+            services.AddMvc(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddFluentValidation();
 
             services.Configure<ApiBehaviorOptions>(options =>
             {

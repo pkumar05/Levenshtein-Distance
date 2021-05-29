@@ -1,16 +1,15 @@
-﻿using LD.ApplicationServices;
+﻿using FluentValidation;
+using LD.ApplicationServices;
 using LD.AS.Interfaces;
+using LD.Domain.DTO;
 using LD.Domain.Interfaces;
+using LD.Domain.Validator;
 using LD.SQL.Infrastructure.Data;
 using LD.SQL.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SD.BuildingBlocks.Infrastructure;
 using SD.BuildingBlocks.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LD.API.DependencyConfig
 {
@@ -41,11 +40,8 @@ namespace LD.API.DependencyConfig
         /// </summary>
         private void AddDependencyValidator()
         {
-            #region Commented Codes
-            //_services.AddScoped<IValidator<GroupsRequest>, GroupsRequestValidator>();
-            //_services.AddScoped<IValidator<CompanyRequest>, CompanyRequestValidator>();
-
-            #endregion
+            _services.AddScoped<IValidator<FindLevenshteinDistanceRequest>,FindLevenshteinDistanceValidator>();
+            
 
         }
         /// <summary>
@@ -68,42 +64,17 @@ namespace LD.API.DependencyConfig
         /// </summary>
         private void AddDependencyService()
         {
-            #region Commented Codes
-            //_services.AddScoped<INotificationService, RabbitMqNotificationService>();
-
-            //_services.AddScoped<IUserSession, UserSession>();
-
-            #endregion
-
             _services.AddScoped<IFindLevenshteinDistance, FindLevenshteinDistanceBetweenTwoInputsService>();
 
         }
 
         public void AddEmailClient()
         {
-            #region commented Codes
-            //    if (_configuration["SMTP:SMTPEnabled"] == "true")
-            //        _services.Configure<SmtpOptions>(_configuration.GetSection("SMTP"));
-            //    _services.AddSingleton<ISmtpEmailClient, SmtpEmailClient>();
-            #endregion
+            
         }
 
         public void AddBizTalkEMailClient()
         {
-            #region commented Codes
-            //var baseUrl = _configuration["BiztalkEmailClient:EmailBase"];
-            //var apiMethod = _configuration["BiztalkEmailClient:ApiMethod"];
-            //var proxy = _configuration["BiztalkEmailClient:Proxy"];
-            //_services.AddScoped<IEmailClient>(x =>
-            //{
-            //    return new BizTalkEMailClient
-            //    {
-            //        BaseUrl = baseUrl,
-            //        ApiMethod = apiMethod,
-            //        Proxy = proxy
-            //    };
-            //});
-            #endregion
         }
 
         private void AddDependencyBus()

@@ -1,4 +1,5 @@
 ﻿using LD.AS.Interfaces;
+using LD.Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,7 @@ namespace LD.API.Controllers.LevenshteinDistance
         }
 
         /// <summary>
-        /// Method to find Levenshtein Distance between two string
+        /// API added to find Levenshtein Distance between two string
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -32,12 +33,34 @@ namespace LD.API.Controllers.LevenshteinDistance
         [HttpPost]
         [Route("FindLevenshteinDistance")]
         //[HasPermission(ProcessName = "ADMIN", SubProcessName = "CREATE")]
-        public async Task<IActionResult> FindLevenshteinDistance(string source, string target)
+        public async Task<IActionResult> FindLevenshteinDistance(FindLevenshteinDistanceRequest request)
         {
             string user = User.Identity.Name;
             try
             {
-                var result = await _findLevenshteinDistance.FindLevenshteinDistanceBetweenTwoInputs(source, target, user);
+                var result = await _findLevenshteinDistance.FindLevenshteinDistanceBetweenTwoInputs(request, user);
+                return Ok(result);
+            }
+
+            catch (Exception ex)
+            {
+                return HandleUserException(ex);
+            }
+        }
+
+        /// <summary>
+        /// API added to get all the saved strings Levenshtein Distance
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAllSavedStringsLevenshteinDistance")]
+        //[HasPermission(ProcessName = "ADMIN", SubProcessName = "CREATE")]
+        public async Task<IActionResult> GetAllSavedStringsLevenshteinDistance()
+        {
+            string user = User.Identity.Name;
+            try
+            {
+                var result = await _findLevenshteinDistance.GetAllStringsLevenshteinDistance();
                 return Ok(result);
             }
 
